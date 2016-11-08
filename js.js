@@ -1,8 +1,10 @@
-  $('#giphyButton').on('click', function() {
+  
+  var giphyPlural = ["test", "best", "west", "crest"];
+
+  $('#giphyButton').on('click', function () {
        
         // This is defining the variable of the giphy code API
-        var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=birds";
-
+var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
         // This is the jQuery runninng the GET method to pull the information from the API code
         $.ajax({url: queryURL, method: 'GET'})
 
@@ -17,7 +19,7 @@
                 
                 // this is setting attributes of the source of the variable
                 birdImage.attr('src', imageUrl);
-                birdImage.attr('alt', 'cat image');
+                birdImage.attr('alt', 'birdImage image');
 
                 //this is loadinng it before the last image 
                 $('#images').prepend(birdImage);
@@ -29,7 +31,7 @@
 function renderButtons(){ 
 
 		// Deletes the movies prior to adding new movies (this is necessary otherwise you will have repeat buttons)
-		$('#buttonsView').empty();
+		$('#giphyView').empty();
 
 		// Loops through the array of movies
 		for (var i = 0; i < giphyPlural.length; i++){
@@ -37,11 +39,10 @@ function renderButtons(){
 			// Then dynamicaly generates buttons for each movie in the array
 
 			// Note the jQUery syntax here... 
-		    var a = $('<button>') // This code $('<button>') is all jQuery needs to create the beginning and end tag. (<button></button>)
+		    var a = $('<img>') // This code $('<button>') is all jQuery needs to create the beginning and end tag. (<button></button>)
 		    a.addClass('giphy'); // Added a class 
-		    a.attr('data-name', giphyPlural[i]); // Added a data-attribute
-		    a.text(giphyPlural[i]); // Provided the initial button text
-		    $('#buttonsView').append(a); // Added the button to the HTML
+		   
+		    $('#giphyView').append(a); // Added the button to the HTML
 		}
 	}
 
@@ -53,7 +54,7 @@ $('#addGiphy').on('click', function(){
 
 		// The movie from the textbox is then added to our array
 		giphyPlural.push(giphy);
-		
+		console.log(giphyPlural)
 		// Our array then runs which handles the processing of our movie array
 		renderButtons();
 
@@ -62,10 +63,8 @@ $('#addGiphy').on('click', function(){
 	})
 
 
-	$(document).on('click', '.giphy', displayGiphy);
 
-
-	// ========================================================
+	
 
 	// This calls the renderButtons() function
 	renderButtons();
