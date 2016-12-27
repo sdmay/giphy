@@ -37,6 +37,7 @@ $('#searchBar').val('');
 
 $('#buttonsView').on('click', '.red', function () {
 	console.log("click")
+	$('#display').empty();
 	var animal = $(this).data('search');
 	console.log(animal)
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
