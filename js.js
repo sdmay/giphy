@@ -4,19 +4,17 @@ for (i = 0; i < topics.length; i++) {
 	$("#buttonsView").append("<button id='topics' class='.btn btn-success red'  data-search='" + topics[i] + "'>" + topics[i] + "</button>")
 }
 
+$('#btn3').on('click', function startSearch() {
 
-$('#btn3').on('click', function startSearch () {
-	 
 	var searchItem = $("#searchBar").val().trim();
-	
 
 	if ($.trim($("#searchBar").val()) === "") {
-		alert('you did not fill out one of the fields');
+		alert('You did not enter a search term.');
 		return false;
 	}
 
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
-	
+
 	$("#buttonsView").append("<button id='topics' class='.btn btn-success red' data-search='" + searchItem + "'>" + searchItem + "</button>")
 	$.ajax({ url: queryURL, method: 'GET' })
 
@@ -32,7 +30,7 @@ $('#btn3').on('click', function startSearch () {
 				$('#display').prepend(randomImage)
 			}
 		});
-$('#searchBar').val('');
+	$('#searchBar').val('');
 });
 
 $('#buttonsView').on('click', '.red', function () {
@@ -57,8 +55,8 @@ $('#buttonsView').on('click', '.red', function () {
 		});
 
 });
- $('#searchBar').keypress(function(e){
-        if(e.which == 13){//Enter key pressed
-            $('#btn3').click();//Trigger search button click event
-        }
-    });
+$('#searchBar').keypress(function (e) {
+	if (e.which == 13) {//Enter key pressed
+		$('#btn3').click();//Trigger search button click event
+	}
+});
