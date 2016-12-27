@@ -1,70 +1,55 @@
-  
-  var giphyPlural = ["test", "best", "west", "crest"];
+var topics = ["fox", "rabbit", "giraffe", "ram"];
+$(document).ready()
+for (i = 0; i < topics.length; i++) {
+	$("#buttonsView").append("<button id='topics' class='.btn btn-success red'  data-search='" + topics[i] + "'>" + topics[i] + "</button>")
+}
 
-  $('#giphyButton').on('click', function () {
-       
-        // This is defining the variable of the giphy code API
-var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
-        // This is the jQuery runninng the GET method to pull the information from the API code
-        $.ajax({url: queryURL, method: 'GET'})
+$('#btn3').on('click', function () {
+	var searchItem = $("#searchBar").val().trim();
 
-            // this is telling it that when it is done to run this function
-            .done(function(response) {
-
-                // this is pulling the first data of the return data and storing it in a variable
-                var imageUrl = response.data.image_original_url;
-
-                // this is creating an image tag through jQuery
-                var birdImage = $("<img>");
-                
-                // this is setting attributes of the source of the variable
-                birdImage.attr('src', imageUrl);
-                birdImage.attr('alt', 'birdImage image');
-
-                //this is loadinng it before the last image 
-                $('#images').prepend(birdImage);
-            });
-    });
-
-
-
-function renderButtons(){ 
-
-		// Deletes the movies prior to adding new movies (this is necessary otherwise you will have repeat buttons)
-		$('#giphyView').empty();
-
-		// Loops through the array of movies
-		for (var i = 0; i < giphyPlural.length; i++){
-
-			// Then dynamicaly generates buttons for each movie in the array
-
-			// Note the jQUery syntax here... 
-		    var a = $('<img>') // This code $('<button>') is all jQuery needs to create the beginning and end tag. (<button></button>)
-		    a.addClass('giphy'); // Added a class 
-		   
-		    $('#giphyView').append(a); // Added the button to the HTML
-		}
+	if ($.trim($("#searchBar").val()) === "") {
+		alert('you did not fill out one of the fields');
+		return false;
 	}
 
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-$('#addGiphy').on('click', function(){
+	$("#buttonsView").append("<button id='topics' class='.btn btn-success red' data-search='" + searchItem + "'>" + searchItem + "</button>")
+	$.ajax({ url: queryURL, method: 'GET' })
 
-		// This line of code will grab the input from the textbox
-		var giphy = $('#giphy-input').val().trim();
+		.done(function (response) {
+			var results = response.data;
+			for (i = 0; i < results.length; i++) {
+				var imageUrl = results[i].images.original.url;
+				console.log(imageUrl)
+				var randomImage = $("<img>");
+				// console.log(imageUrl)
+				randomImage.attr('src', imageUrl);
+				randomImage.attr('alt', 'random image');
+				$('#display').prepend(randomImage)
+			}
+		});
 
-		// The movie from the textbox is then added to our array
-		giphyPlural.push(giphy);
-		console.log(giphyPlural)
-		// Our array then runs which handles the processing of our movie array
-		renderButtons();
+});
 
-		// We have this line so that users can hit "enter" instead of clicking on ht button and it won't move to the next page
-		return false;
-	})
+$('#buttonsView').on('click', '.red', function () {
+	console.log("click")
+	var animal = $(this).data('search');
+	console.log(animal)
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 
+	$.ajax({ url: queryURL, method: 'GET' })
 
-	
+		.done(function (response) {
+			var results = response.data;
+			for (i = 0; i < results.length; i++) {
+				var imageUrl = results[i].images.original.url;
+				var randomImage = $("<img>");
+				randomImage.attr('src', imageUrl);
+				randomImage.attr('alt', 'random image');
+				$('#display').prepend(randomImage)
+			}
+		});
 
-	// This calls the renderButtons() function
-	renderButtons();
+});
