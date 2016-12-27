@@ -13,7 +13,7 @@ $('#btn3').on('click', function startSearch() {
 		return false;
 	}
 
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 	$("#buttonsView").append("<button id='topics' class='.btn btn-success red' data-search='" + searchItem + "'>" + searchItem + "</button>")
 	$.ajax({ url: queryURL, method: 'GET' })
@@ -38,7 +38,7 @@ $('#buttonsView').on('click', '.red', function () {
 	$('#display').empty();
 	var animal = $(this).data('search');
 	console.log(animal)
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 
 	$.ajax({ url: queryURL, method: 'GET' })
